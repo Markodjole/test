@@ -4,13 +4,7 @@ var urlSaLokacijom;
 var stranica = document.getElementById('greska');
 var detaljiLeta = document.getElementById('details');
 
-///////////////////// odobri geolokaciju //////////////////////////////
-// function odobrenaGeo(){
-//     var r = confirm("Do you want to allow us to use your geolocation?");
-//     window.sessionStorage.setItem("odobrena_geo", r);
-//     return r;
-// }
-// odobrenaGeo();
+
 
 /////////////////// geoLokacija //////////////////////////////////
 function geoLokacija(){
