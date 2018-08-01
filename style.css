@@ -1,0 +1,121 @@
+body {
+    color: white !important ;
+    font-family: 'Montserrat' !important ;
+    font-size: 22px;
+    background-color: #ccebff !important ;
+}
+.sve {
+    width:80%;
+    margin:auto;
+}
+a {
+    color:white !important ;
+    text-decoration:none !important ;
+    cursor: pointer;
+}
+
+.naziv {
+    background-color: #1aa7ff;
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+#content {
+    opacity: .5;
+}
+
+.grid-container {
+    padding:7px;
+    border: 1px solid #b3e2ff;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin:10px;
+    display: grid;
+  grid-template-columns: 6fr 1fr;
+  grid-gap: 10px;
+}
+
+.grid-container:hover {
+    background-color: #1aa7ff;
+}
+
+.grid-container:nth-child(odd) {
+    background-color:#26adff;
+}
+.grid-container:nth-child(even) {
+    background-color:#0a0a0a;
+}
+
+.grid-item {
+    padding: 5px;
+}
+
+.grid-item div {
+    padding: 3px;
+}
+
+#slikaKompanije {
+    margin: auto;
+}
+
+#details {
+    opacity: .5;
+}
+
+#details span {
+    font-size: 120%;
+}
+
+#greska {
+    color:red;
+    font-size: 150%;
+    text-align: center;
+
+}
+.back {
+    width: 50%;
+    max-width: 200px;
+    padding: 10px;
+    background-color: #1aa7ff;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin:10px;
+    border-color: #b3e2ff;
+    outline:none;
+}
+
+@media only screen and (max-width: 550px) {
+    .sve {
+        width:100%;
+    }
+    #slikaKompanije {
+        max-width: 100px;
+    }
+
+    #details {
+        font-size: 90%;
+    }
+    .back {
+        font-size: 90%;
+    }
+
+    #details span {
+        font-size: 100%;
+    }
+
+    .grid-container {
+        padding:7px;
+        margin:5px;
+        grid-gap: 5px;
+    }
+
+    .grid-item {
+        padding: 1px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    #slikaKompanije {
+        max-width: 60px;
+    }
+}
