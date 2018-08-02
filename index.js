@@ -3,6 +3,7 @@ var lng;
 var urlSaLokacijom;
 var stranica = document.getElementById('greska');
 var detaljiLeta = document.getElementById('details');
+var lista = document.getElementById('content');
 
 
 
@@ -50,6 +51,7 @@ function Let(Kod, IstocnoZapano, Visina, Proizvodjac, Model, PolaznaTacka, Desti
 
 ////////////////////// uzmi podatke sa api //////////////////////////////////
 function uzmiPodatke(rezultat){
+    lista.innerHTML = "";
     rezultat.sort(function(a, b) {
         return b.Alt - a.Alt;
     });
