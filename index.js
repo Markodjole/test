@@ -20,7 +20,7 @@ geoLokacija();
 function prikazi(pozicija){
     lat = pozicija.coords.latitude;
     lng = pozicija.coords.longitude;
-    urlSaLokacijom = "https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?lat=" + lat + "&lng=" + lng + "&fDstL=0&fDstU=100" ;
+    urlSaLokacijom = "https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?lat=" + lat + "&lng=" + lng + "&fDstL=0&fDstU=300" ;
     console.log('lat=' + lat);
     console.log('lng=' + lng);
     uzmiPodatke(pozoviApi(urlSaLokacijom));
@@ -154,8 +154,8 @@ function crtajLet(let){
                   var zi = document.createElement("IMG");
                   zi.setAttribute("class", "grid-item" );
                   if(let.IstocnoZapano == true){
-                      slika = "west.png";
-                  } else slika = "east.png";
+                      slika = "img/west.png";
+                  } else slika = "img/east.png";
                   zi.setAttribute("src", slika );
                   zi.innerHTML = let.IstocnoZapano;        
                   div2.appendChild(zi);
