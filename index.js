@@ -23,10 +23,14 @@ function prikazi(pozicija){
     urlSaLokacijom = "https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?lat=" + lat + "&lng=" + lng + "&fDstL=0&fDstU=300" ;
     console.log('lat=' + lat);
     console.log('lng=' + lng);
-    uzmiPodatke(pozoviApi(urlSaLokacijom));
+    var promise = pozoviApi(urlSaLokacijom);
+    promise.then(function(rezult){
+        uzmiPodatke(rezult);
     setInterval(function(){
-        uzmiPodatke(pozoviApi(urlSaLokacijom));
+        uzmiPodatke(rezult);
     }, 60000);
+    });
+    
     
 }
 
@@ -50,7 +54,9 @@ function Let(Kod, IstocnoZapano, Visina, Proizvodjac, Model, PolaznaTacka, Desti
 
 
 ////////////////////// uzmi podatke sa api //////////////////////////////////
-function uzmiPodatke(rezultat){
+function uzmiPodatke(rez){
+    var zapad;
+    var rezultat = rez.acList;
     lista.innerHTML = "";
     rezultat.sort(function(a, b) {
         return b.Alt - a.Alt;
@@ -58,7 +64,7 @@ function uzmiPodatke(rezultat){
 
     for(var i in rezultat){
         if(rezultat[i].Trak > 180){
-            var zapad = true;
+         zapad = true;
         } else zapad = false;
          
          
@@ -69,25 +75,24 @@ function uzmiPodatke(rezultat){
 }
 
 /////////////////////// pozivanje api /////////////////////////////////////
+
 function pozoviApi(url){
-    var response;
-    var httpreq = new XMLHttpRequest();
-    try {
-        httpreq.onreadystatechange =  function(){
-            if(httpreq.readyState == 4){
-                if(httpreq.status == 200){
-                    console.log("success");
-                    response = JSON.parse(httpreq.response);
-                } else return console.log("error");
+    return new Promise(function(resolve, reject){
+        var httpreq = new XMLHttpRequest();
+        httpreq.open("GET", url, true);
+        httpreq.onload = function(){
+            if(httpreq.status == 200){
+                resolve(JSON.parse(httpreq.response));
+            } else {
+                reject(httpreq.statusText);
             }
-        }
-        httpreq.open("GET", url, false);
+        };
+        httpreq.onerror = function(){
+            reject(httpreq.statusText);
+        };
         httpreq.send();
-        return response.acList;
-    }
-    catch(err){
-        return err;
-    }
+    });
+   
 }
 
 //////////////////////////////////////////////// detalji leta ///////////////////////////////////
@@ -97,18 +102,22 @@ function getDetails(element){
     $("#backButton").slideDown(500);
     detaljiLeta.innerHTML = "";
     var detalji;
-    var result = pozoviApi(urlSaLokacijom);
-    for(var i in result){
-        if(element.children[0].id == result[i].Id){
-            var logoSrc = makeLogo(result[i].Op); 
-            detalji = new Let(result[i].Id, "zapad", result[i].Alt, result[i].Man, result[i].Mdl, result[i].From, result[i].To, logoSrc)
-            crtajDetalje(detalji);
-            break;
+    var rez = pozoviApi(urlSaLokacijom);
+    rez.then(function(resul){
+        var result = resul.acList;
+        for(var i in result){
+            if(element.children[0].id == result[i].Id){
+                var logoSrc = makeLogo(result[i].Op); 
+                detalji = new Let(result[i].Id, "zapad", result[i].Alt, result[i].Man, result[i].Mdl, result[i].From, result[i].To, logoSrc)
+                crtajDetalje(detalji);
+                break;
+            }
         }
-    }
-    function makeLogo(naziv){
-       return "https://logo.clearbit.com/" + naziv.split(" ").join().replace(/,/g , "").toLowerCase() + ".com";
-    }
+        function makeLogo(naziv){
+           return "https://logo.clearbit.com/" + naziv.split(" ").join().replace(/,/g , "").toLowerCase() + ".com";
+        }
+    })
+   
     
 }
 
